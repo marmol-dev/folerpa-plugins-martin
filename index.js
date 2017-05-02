@@ -11,14 +11,29 @@ app.use(require('body-parser').json())
 
 app.use(require('morgan')('combined'))
 
+function removeLine(text, repeat = 1) {
+    const sliced = text.split('\n').slice(repeat)
+    console.log('sliced', sliced)
+    return sliced.join('\n')
+}
+
 function getChiste(html, indice) {
     const $ = cheerio.load(html)
     const eq = indice + 3
-    return $('#wrapper > div').eq(12).find('p').eq(0).text().trim()
+    let text = $('.content').eq(indice).text()
+    
+    const cleanText = removeLine(text, 8).trim()
+        .replace(/\n{2,}/g, '\n')
+        .replace(/  +/g, ' ');
+
+    console.log('text', text)
+    console.log('clean', cleanText)
+
+    return cleanText 
 }
 
 function getMejorChiste(nPagina, indice){
-    const url = 'http://www.chistescortos.eu/top?page=' + (nPagina + 1)
+    const url = 'http://www.periodicoelgancho.com/chistes/chistes-buenos/page/' + (nPagina + 1)
 
     return axios.get(url)
         .then(response => {
@@ -34,12 +49,12 @@ app.post('/',
     (req, res, next) => {
         console.log('new request', inspect(req.body, {depth: 10}))
 
-        const indice = Math.floor(Math.random() * 10)
-        const pagina = Math.floor(Math.random() * 40)
+        const indice = Math.floor(Math.random() * 8)
+        const pagina = Math.floor(Math.random() * 19)
 
         console.log(indice, pagina)
 
-        getMejorChiste(indice, pagina)
+        getMejorChiste(pagina, indice)
             .then(chiste => {
                 res.json({
                     text: chiste,
