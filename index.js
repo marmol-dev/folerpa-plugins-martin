@@ -41,6 +41,18 @@ function getMejorChiste(nPagina, indice){
         })
 }
 
+const introduciones = [
+    'Ahí va uno:',
+    'A ver que te parece:',
+    'Me contaron uno muy bueno:',
+    'Ahí va uno gracioso:',
+    'Este es es muy bueno:'
+]
+
+function getRandom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)]
+}
+
 app.post('/',
     (req, res, next) => {
         console.log('new request', inspect(req.body, {depth: 10}))
@@ -53,7 +65,7 @@ app.post('/',
         getMejorChiste(pagina, indice)
             .then(chiste => {
                 res.json({
-                    text: chiste,
+                    text: `${getRandom(introduciones)}\n${chiste}`,
                     type: 1
                 })
             })
