@@ -13,7 +13,6 @@ app.use(require('morgan')('combined'))
 
 function removeLine(text, repeat = 1) {
     const sliced = text.split('\n').slice(repeat)
-    console.log('sliced', sliced)
     return sliced.join('\n')
 }
 
@@ -25,9 +24,6 @@ function getChiste(html, indice) {
     const cleanText = removeLine(text, 8).trim()
         .replace(/\n{2,}/g, '\n')
         .replace(/  +/g, ' ');
-
-    console.log('text', text)
-    console.log('clean', cleanText)
 
     return cleanText 
 }
