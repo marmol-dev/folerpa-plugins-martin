@@ -22,7 +22,7 @@ function getChiste(html, indice) {
     let text = $('.content').eq(indice).text()
     
     const cleanText = removeLine(text, 8).trim()
-        .replace(/\n{2,}/g, '\n')
+        .replace(/\n{3,}/g, '\n')
         .replace(/  +/g, ' ');
 
     return cleanText 
@@ -46,7 +46,7 @@ const introduciones = [
     'A ver que te parece:',
     'Me contaron uno muy bueno:',
     'Ahí va uno gracioso:',
-    'Este es es muy bueno:'
+    'Este es muy bueno:'
 ]
 
 function getRandom(arr) {
@@ -65,8 +65,8 @@ app.post('/',
         getMejorChiste(pagina, indice)
             .then(chiste => {
                 res.json({
-                    text: `${getRandom(introduciones)}\n${chiste}`,
-                    type: 1
+                    text: `${getRandom(introduciones)}\n\n${chiste}`,
+                    type: 1,
                 })
             })
             .catch(err => {
