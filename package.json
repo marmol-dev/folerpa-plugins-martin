@@ -1,7 +1,7 @@
 {
-  "name": "folerpa-plugin-tutorias",
+  "name": "folerpa-plugins-martin",
   "version": "1.0.0",
-  "description": "Un plugin para Folerpa para conocer las tutorias en la ESEI",
+  "description": "Varios plugins de Folerpa en un paquete de Node",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
