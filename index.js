@@ -12,6 +12,7 @@ app.use(require('morgan')('combined'))
 
 
 app.post('/la-region', require('./plugins/la-region').default)
+app.post('/eathy', require('./plugins/eathy').default)
 
 app.listen(PORT, err => {
     if (err) {
