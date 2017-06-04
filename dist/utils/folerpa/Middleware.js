@@ -49,7 +49,7 @@ class Middleware {
                                 throw new Error('Entities not found');
                             }
                         }
-                        const res = yield handlers[i].run(req.body);
+                        const res = yield handlers[i].run(req.body, entities.intent, entities);
                         if (res instanceof Object) {
                             return res;
                         }

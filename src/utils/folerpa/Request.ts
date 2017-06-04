@@ -1,3 +1,4 @@
+import { IWitEntity } from './Request';
 export interface IWitEntity {
     suggested?: boolean,
     confidence: number,
@@ -8,6 +9,7 @@ export interface IWitEntity {
 export interface IWitValidation {
     _text: string,
     entities: {
+        intent: IWitEntity[],
         [entityName: string]: IWitEntity[]
     }
 }

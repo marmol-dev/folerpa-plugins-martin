@@ -6,24 +6,13 @@ export default Middleware.create([
             'alimento'
         ],
         intent: 'get_calorías',
-        async run(request) {
+        async run(request, intent, { alimento }) {
+            const [{ value: nombreAlimento }] = alimento
 
-            console.log('request', request)
-
-            const { intent, alimento } = request.conversation.messages[0].messageValidation.data.entities
-
-            if (intent && intent.length > 0) {
-                let nombreAlimento
-
-                if (alimento && alimento.length > 0) {
-                    nombreAlimento = alimento[0].value
-                }
-
-                if (nombreAlimento) {
-                    return {
-                        text: `Aún no conozco cuántas calorías tiene "${nombreAlimento}", pero muy pronto lo sabré! 💪`,
-                        type: 1
-                    }
+            if (nombreAlimento) {
+                return {
+                    text: `Aún no conozco cuántas calorías tiene "${nombreAlimento}", pero muy pronto lo sabré! 💪`,
+                    type: 1
                 }
             }
         }

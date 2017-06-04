@@ -1,9 +1,9 @@
 import { IResponse } from './Response';
-import { IRequest } from './Request';
+import { IRequest, IWitEntity } from './Request';
 import { Request, Response } from 'express'
 
 export interface IMiddlewareHandler {
-    run: (request: IRequest) => IResponse | Promise<IResponse>,
+    run: (request: IRequest, intent: IWitEntity[], entities: {[name: string]: IWitEntity[]}) => IResponse | Promise<IResponse>,
     intent?: string,
     entities?: (string|[string, string]|[string])[]
 }
@@ -55,7 +55,7 @@ export class Middleware {
                         }
                         
 
-                        const res = await handlers[i].run(req.body)
+                        const res = await handlers[i].run(req.body, entities.intent, entities)
 
                         if (res instanceof Object) {
                             return res

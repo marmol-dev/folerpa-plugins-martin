@@ -15,21 +15,14 @@ exports.default = folerpa_1.Middleware.create([
             'alimento'
         ],
         intent: 'get_calorías',
-        run(request) {
+        run(request, intent, { alimento }) {
             return __awaiter(this, void 0, void 0, function* () {
-                console.log('request', request);
-                const { intent, alimento } = request.conversation.messages[0].messageValidation.data.entities;
-                if (intent && intent.length > 0) {
-                    let nombreAlimento;
-                    if (alimento && alimento.length > 0) {
-                        nombreAlimento = alimento[0].value;
-                    }
-                    if (nombreAlimento) {
-                        return {
-                            text: `Aún no conozco cuántas calorías tiene "${nombreAlimento}", pero muy pronto lo sabré! 💪`,
-                            type: 1
-                        };
-                    }
+                const [{ value: nombreAlimento }] = alimento;
+                if (nombreAlimento) {
+                    return {
+                        text: `Aún no conozco cuántas calorías tiene "${nombreAlimento}", pero muy pronto lo sabré! 💪`,
+                        type: 1
+                    };
                 }
             });
         }
