@@ -19,10 +19,10 @@ export class Middleware {
                         if (res instanceof Object) {
                             return res
                         } else {
-                            throw null
+                            throw new Error('No object')
                         }
                     } catch (e) {
-                        loop(i + 1)
+                        return await loop(i + 1)
                     }
                 }
             }

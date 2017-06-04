@@ -22,11 +22,11 @@ class Middleware {
                             return res;
                         }
                         else {
-                            throw null;
+                            throw new Error('No object');
                         }
                     }
                     catch (e) {
-                        loop(i + 1);
+                        return yield loop(i + 1);
                     }
                 }
             });
