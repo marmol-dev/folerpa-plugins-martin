@@ -1,3 +1,4 @@
+import { Text } from './Text';
 import { IResponse } from './Response';
 import { IRequest, IWitEntity } from './Request';
 import { Request, Response } from 'express'
@@ -71,6 +72,11 @@ export class Middleware {
 
             try {
                 const response = await loop()
+
+                if (!response.speakText) {
+                    response.speakText= Text.withoutEmojis(response.text)
+                }
+
                 res.json(response)
             } catch (e) {
                 res.sendStatus(500)

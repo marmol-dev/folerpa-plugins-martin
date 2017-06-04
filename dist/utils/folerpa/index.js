@@ -6,3 +6,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./WebPages"));
 __export(require("./Random"));
 __export(require("./Middleware"));
+__export(require("./Text"));

@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Text_1 = require("./Text");
 class Middleware {
     static create(handlers) {
         return (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -65,6 +66,9 @@ class Middleware {
             });
             try {
                 const response = yield loop();
+                if (!response.speakText) {
+                    response.speakText = Text_1.Text.withoutEmojis(response.text);
+                }
                 res.json(response);
             }
             catch (e) {
