@@ -5,7 +5,7 @@ import { Request, Response } from 'express'
 export interface IMiddlewareHandler {
     run: (request: IRequest) => IResponse | Promise<IResponse>,
     intent?: string,
-    entities: (string|[string, string]|[string])[]
+    entities?: (string|[string, string]|[string])[]
 }
 
 export class Middleware {
