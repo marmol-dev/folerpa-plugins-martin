@@ -17,6 +17,38 @@ class Middleware {
                 }
                 else {
                     try {
+                        const handler = handlers[i];
+                        const body = req.body;
+                        const { entities } = body.conversation.messages[0].messageValidation.data;
+                        //validate intent
+                        if (handler.intent) {
+                            const index = entities.intent.findIndex(e => {
+                                return e.value === handler.intent;
+                            });
+                            if (index === -1) {
+                                throw new Error('Intent not found');
+                            }
+                        }
+                        //validate entities
+                        if (handler.entities) {
+                            const allAreValid = handler.entities.every(entity => {
+                                const entityName = typeof entity === 'string' ? entity : entity[0];
+                                const entityValues = entities[entityName];
+                                if (typeof entity === 'string' || entity.length === 1) {
+                                    return !!entityValues;
+                                }
+                                else {
+                                    if (!entityValues) {
+                                        return false;
+                                    }
+                                    const wantedValue = entity[1];
+                                    return entityValues.findIndex(v => v.value === wantedValue) > -1;
+                                }
+                            });
+                            if (!allAreValid) {
+                                throw new Error('Entities not found');
+                            }
+                        }
                         const res = yield handlers[i].run(req.body);
                         if (res instanceof Object) {
                             return res;
@@ -26,6 +58,7 @@ class Middleware {
                         }
                     }
                     catch (e) {
+                        console.error(`Middleware #${i + 1} failed because of:`, e);
                         return yield loop(i + 1);
                     }
                 }

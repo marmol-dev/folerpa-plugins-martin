@@ -2,7 +2,13 @@ import { WebPages, Random, Middleware } from '../../utils/folerpa'
 
 export default Middleware.create([
     {
+        entities: [
+            'alimento'
+        ],
+        intent: 'get_calorías',
         async run(request) {
+
+            console.log('request', request)
 
             const { intent, alimento } = request.conversation.messages[0].messageValidation.data.entities
 

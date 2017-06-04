@@ -11,8 +11,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const folerpa_1 = require("../../utils/folerpa");
 exports.default = folerpa_1.Middleware.create([
     {
+        entities: [
+            'alimento'
+        ],
+        intent: 'get_calorías',
         run(request) {
             return __awaiter(this, void 0, void 0, function* () {
+                console.log('request', request);
                 const { intent, alimento } = request.conversation.messages[0].messageValidation.data.entities;
                 if (intent && intent.length > 0) {
                     let nombreAlimento;
