@@ -16,14 +16,13 @@ const introducciones = [
     'Los titulares de hoy son',
     'La actualidad de Ourense está marcada por'
 ];
-function getTitulares(limit) {
+function getTitulares(limit = Infinity) {
     return __awaiter(this, void 0, void 0, function* () {
         const $ = yield folerpa_1.WebPages.scrape('http://www.laregion.es/seccion/ourense/');
-        let titulares = $('h3.title').map((_, titular) => $(titular).text()).get();
-        if (limit) {
-            titulares = titulares.slice(0, limit);
-        }
-        return titulares;
+        return $('h3.title')
+            .map((_, titular) => $(titular).text())
+            .get()
+            .slice(0, limit);
     });
 }
 exports.default = folerpa_1.Middleware.create([

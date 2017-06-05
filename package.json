@@ -4,7 +4,8 @@
   "description": "Varios plugins de Folerpa en un paquete de Node",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"tsc -w\" \"nodemon\""
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,10 @@
     "fatsecret": "^1.0.2",
     "glob": "^7.1.2",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "morgan": "^1.8.1"
+  },
+  "devDependencies": {
+    "concurrently": "^3.4.0"
   }
 }

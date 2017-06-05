@@ -23,4 +23,14 @@ export class Text {
         
         return cadena;
     }
+
+    static phoneFormatted(phone : string) {
+        const matched = phone.match(/([0-9]{3})([0-9]{2})([0-9]{2})([0-9]{2})/)
+
+        if (matched) {
+            return matched.slice(1,5).join(' ')
+        } else {
+            return phone
+        }
+    }
 }
