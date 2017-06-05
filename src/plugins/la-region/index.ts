@@ -8,16 +8,13 @@ const introducciones = [
     'La actualidad de Ourense está marcada por'
 ]
 
-async function getTitulares(limit?: number) {
+async function getTitulares(limit: number = Infinity) {
     const $ = await WebPages.scrape('http://www.laregion.es/seccion/ourense/')
-
-    let titulares = $('h3.title').map((_, titular) => $(titular).text()).get()
-
-    if (limit) {
-        titulares = titulares.slice(0,limit)
-    }
-
-    return titulares
+    
+    return  $('h3.title')
+                .map((_, titular) => $(titular).text())
+                .get()
+                .slice(0, limit)
 }
 
 export default Middleware.create([
