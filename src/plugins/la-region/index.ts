@@ -21,10 +21,21 @@ class NoticiasRepository {
 
         return <any>$('.onm-new')
             .map((_, article) => {
+                const pathImagen = $('.article-media img', article).attr('src')
+                let urlImagen
+
+                if (pathImagen) {
+                    if (pathImagen.startsWith('/')) {
+                        urlImagen = `http://laregion.es${pathImagen}`
+                    } else {
+                        urlImagen = pathImagen
+                    }
+                }
+
                 return {
                     titulo: $('h3.title', article).text().trim(),
                     resumen: $('.summary', article).text().trim(),
-                    urlImagen: $('.article-media > img', article).attr('src'),
+                    urlImagen,
                     url: `http://laregion.es${$('h3.title > a', article).attr('href')}`
                 }
             })
@@ -70,11 +81,18 @@ export default Middleware.create([
                     const speakText = baseText
                     const text = `${baseText}\n\n${noticia.url}`
 
+                    let imageUrl
+
+                    if (noticia.urlImagen) {
+                        console.log('urlI', noticia.urlImagen)
+                        imageUrl = noticia.urlImagen
+                    }
+
 
                     return {
                         text,
                         type: 1,
-                        imageUrl: noticia.urlImagen,
+                        imageUrl,
                         speakText
                     }
 
@@ -104,11 +122,20 @@ export default Middleware.create([
 
             const titularesStr = noticias.map(({ titulo }) => `- ${titulo}\n`).join('')
 
+            const noticiaImagen = noticias.find(noticia => Boolean(noticia.urlImagen))
+
+            let imageUrl
+
+            if (noticiaImagen) {
+                imageUrl = noticiaImagen.urlImagen
+            }
+
             const text = `${Random.item(introducciones)}\n${titularesStr}`
 
             return {
                 text,
-                type: 1
+                type: 1,
+                imageUrl
             }
         }
     }

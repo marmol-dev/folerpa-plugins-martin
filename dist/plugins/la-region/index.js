@@ -22,10 +22,20 @@ class NoticiasRepository {
             const $ = yield folerpa_1.WebPages.scrape('http://www.laregion.es/seccion/ourense/');
             return $('.onm-new')
                 .map((_, article) => {
+                const pathImagen = $('.article-media img', article).attr('src');
+                let urlImagen;
+                if (pathImagen) {
+                    if (pathImagen.startsWith('/')) {
+                        urlImagen = `http://laregion.es${pathImagen}`;
+                    }
+                    else {
+                        urlImagen = pathImagen;
+                    }
+                }
                 return {
                     titulo: $('h3.title', article).text().trim(),
                     resumen: $('.summary', article).text().trim(),
-                    urlImagen: $('.article-media > img', article).attr('src'),
+                    urlImagen,
                     url: `http://laregion.es${$('h3.title > a', article).attr('href')}`
                 };
             })
@@ -64,10 +74,15 @@ exports.default = folerpa_1.Middleware.create([
                         const baseText = `He encontrado una noticia relacionada con el tema:\n\n${noticia.titulo}\n\n${noticia.resumen}`;
                         const speakText = baseText;
                         const text = `${baseText}\n\n${noticia.url}`;
+                        let imageUrl;
+                        if (noticia.urlImagen) {
+                            console.log('urlI', noticia.urlImagen);
+                            imageUrl = noticia.urlImagen;
+                        }
                         return {
                             text,
                             type: 1,
-                            imageUrl: noticia.urlImagen,
+                            imageUrl,
                             speakText
                         };
                     }
@@ -96,10 +111,16 @@ exports.default = folerpa_1.Middleware.create([
             return __awaiter(this, void 0, void 0, function* () {
                 const noticias = yield NoticiasRepository.findAll(5);
                 const titularesStr = noticias.map(({ titulo }) => `- ${titulo}\n`).join('');
+                const noticiaImagen = noticias.find(noticia => Boolean(noticia.urlImagen));
+                let imageUrl;
+                if (noticiaImagen) {
+                    imageUrl = noticiaImagen.urlImagen;
+                }
                 const text = `${folerpa_1.Random.item(introducciones)}\n${titularesStr}`;
                 return {
                     text,
-                    type: 1
+                    type: 1,
+                    imageUrl
                 };
             });
         }
