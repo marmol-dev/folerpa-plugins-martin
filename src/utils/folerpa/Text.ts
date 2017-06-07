@@ -33,4 +33,17 @@ export class Text {
             return phone
         }
     }
+
+    static confidence(text: string, search: string) {
+        const textoPartido = this.withoutTildes(text.toLowerCase().replace(',','').replace('.','')).split(' ')
+
+
+        const busquedaPartida = this.withoutTildes(search.toLocaleLowerCase()).split(' ')
+
+        const contadorMatches = busquedaPartida.reduce((accum, actual, i) => {
+            return textoPartido.lastIndexOf(actual) > -1 ? accum+1 : accum
+        }, 0)
+
+        return contadorMatches/busquedaPartida.length
+    }
 }

@@ -9,9 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Text_1 = require("./Text");
+const util_1 = require("util");
 class Middleware {
     static create(handlers) {
         return (req, res) => __awaiter(this, void 0, void 0, function* () {
+            console.log('New request received:', util_1.inspect(req.body, false, 12));
             const loop = (i = 0) => __awaiter(this, void 0, void 0, function* () {
                 if (i === handlers.length) {
                     throw new Error('No handler');
