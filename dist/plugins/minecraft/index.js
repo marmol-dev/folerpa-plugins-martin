@@ -47,12 +47,12 @@ class CrafteoRepository {
 exports.default = folerpa_1.Middleware.create([
     {
         entities: [
-            'elemento'
+            'item'
         ],
         intent: 'get_crafteo',
-        run(request, intent, { elemento }) {
+        run(request, intent, { item }) {
             return __awaiter(this, void 0, void 0, function* () {
-                const [{ value: nombreElemento }] = elemento;
+                const [{ value: nombreElemento }] = item;
                 let text;
                 let imageUrl;
                 try {

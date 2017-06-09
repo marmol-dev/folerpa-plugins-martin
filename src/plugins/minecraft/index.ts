@@ -54,11 +54,11 @@ class CrafteoRepository {
 export default Middleware.create([
     {
         entities: [
-            'elemento'
+            'item'
         ],
         intent: 'get_crafteo',
-        async run(request, intent, { elemento }) {
-            const [{ value: nombreElemento }] = elemento
+        async run(request, intent, { item }) {
+            const [{ value: nombreElemento }] = item
 
             let text
             let imageUrl : string
